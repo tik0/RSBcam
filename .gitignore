@@ -11,3 +11,11 @@
 *.lai
 *.la
 *.a
+
+# Project specific
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+lib
+Makefile
+
