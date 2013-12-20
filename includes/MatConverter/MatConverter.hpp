@@ -1,9 +1,8 @@
 #pragma once
 
-#include <rsb0.9/rsb/converter/Converter.h>
-#include <iostream>
+#include <rsb/converter/Converter.h>
 #include "opencv2/core/core.hpp"
-#include "opencv2/highgui/highgui.hpp"
+// #include "opencv2/highgui/highgui.hpp"
 
 using namespace std;
 using namespace boost;
