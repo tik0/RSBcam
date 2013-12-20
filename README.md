@@ -19,7 +19,7 @@ I used the following software:
 
 You maybe have to add some symbolic links for rsb 0.9 libraries by running the following commands in `/usr/lib/`:
 * `ln -s librsb.so.0.9 librsb.so`
-* `ln -s librsc.so.0.9 librsc.so`
+* `ln -s librsc0.9.so.0.9 librsc.so`
 
 
 
