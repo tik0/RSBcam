@@ -36,7 +36,7 @@ int main() {
   // Creating the cam object
   cv::VideoCapture cam;
   // Open the device /dev/video0
-  cam.open(0);
+  cam.open(3);
   // Allocate a frame object to store the picture
 //  cv::Mat frame;
   shared_ptr<cv::Mat> frame(new cv::Mat);

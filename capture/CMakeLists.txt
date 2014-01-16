@@ -6,48 +6,72 @@ message (STATUS "Set PROJECT_NAME to ${PROJECT_NAME}")
 
 project ("${PROJECT_NAME}")
 
+
+# Read the pkg-config modules
+find_package(PkgConfig)
+
+pkg_check_modules(RSB rsb)
+pkg_check_modules(OPENCV opencv)
+pkg_check_modules(LIBV4l2 libv4l2)
+
+# Not needed. The libraries will be set manualy
+# link_directories(
+#     ${RSB_LIBRARY_DIRS}
+#     ${OPENCV_LIBRARY_DIRS}
+#     ${LIBV4l2_LIBRARY_DIRS}
+# )
+
 # Set the include pathe
 include_directories(
-    /usr/local/include                                       # For OpenCV
-    /usr/include
-    /usr/include/rsb0.9
-    /usr/include/rsc0.9
-    ../includes                                              # Other includes like converters and stuff
-    "${CMAKE_CURRENT_BINARY_DIR}"                            # add the binary tree to the search path for include files
+#     ${RSB_INCLUDE_DIRS}                                             # RSB
+    ${OPENCV_INCLUDE_DIRS}                                          # OpenCV
+    ${LIBV4l2_INCLUDE_DIRS}                                         # Video for Linux
+    "../includes"                                                # Other includes like converters and stuff
+    "${CMAKE_CURRENT_BINARY_DIR}"                                   # add the binary tree to the search path for include files
+    "$ENV{SDKTARGETSYSROOT}/usr/include"                            # System includes
+    "$ENV{SDKTARGETSYSROOT}/usr/include/rsb"                        # RSB
+    "$ENV{SDKTARGETSYSROOT}/usr/include/rsc"                        # RSC
+    "$ENV{SDKTARGETSYSROOT}/usr/include/rst"                        # RST
+    "$ENV{SDKTARGETSYSROOT}/usr/include/rst-converters/"            # RST-converters
+    "$ENV{SDKTARGETSYSROOT}/usr/include/c++"                        # System c++ includes
+    "$ENV{SDKTARGETSYSROOT}/usr/include/c++/arm-poky-linux-gnueabi" # IO streams
 )
 
 # Add folders to build and run CMakeLists.txt in it
-add_subdirectory (../includes/MatConverter lib/MatConverter) 
+add_subdirectory (../includes/MatConverter lib/MatConverter)
 
 # add the executable
 add_executable ("${PROJECT_NAME}" main.cxx)
 
-# Link the executable to the library.
+# Set the compiler
+# SET (CMAKE_C_COMPILER $ENV{CPP})
+# SET (CMAKE_CXX_COMPILER $ENV{CXX})
+
+# Link the executable to the library. 
+# SET (BLAH "$ENV{SDKTARGETSYSROOT}/usr/lib")
 link_directories (
-    "/usr/lib"                             # For standard libraries
-    "/usr/local/lib/"                      # For OpenCV libraries
-    "/usr/lib/x86_64-linux-gnu/"           # For boost libraries
+    "$ENV{SDKTARGETSYSROOT}/usr/lib"
 )
+
+# Link the executable to the library.
+# link_directories (
+#     "/usr/lib"                             # For standard libraries
+#     "/usr/local/lib/"                      # For OpenCV libraries
+#     "/usr/lib/x86_64-linux-gnu/"           # For boost libraries
+# )
 
 target_link_libraries (
     "${PROJECT_NAME}"
-    # -- boost
-    boost_system
-    boost_thread
-    boost_regex
-    boost_filesystem
-    pthread
-    # -- rsb
-    rsb                                    # Maybe you need to create a link: "ln -s librsb.so.0.9 librsb.so"
-#     rsbts
-#     rsbsimplebuffer
-    rsc                                    # Maybe you need to create a link: "ln -s librsc0.9.so.0.9 librsc.so"
-    # -- OpenCV
+    rsb
+    boost_regex-mt
+    boost_date_time-mt
+    boost_program_options-mt
+    boost_system-mt
+    rsc
     opencv_core
     opencv_highgui
     # -- Own libraries
     MatConverter
-#     ${OPENCV_LDFLAGS}
 )
 
 # Get rid of depricated warnings
