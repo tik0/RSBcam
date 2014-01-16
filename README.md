@@ -1,12 +1,12 @@
 RSBcam
 ======
 
-Using an RSB-informer for publishing OpenCV camera pictures and displaying it with an RSB-listener.
+Using an RSB-informer for publishing OpenCV camera pictures from the BeBot and displaying it with an RSB-listener on a remote PC.
 Also introducing an own converter for OpenCV "mat" variables.
 
 The project consists out of two programms `capture` and `show`.
-`capture` opens the camera device and send the images via in-process to the `/image` scope.
-`show` reads from this scope and shows the captured frames on screen.
+`capture` opens the camera device "/dev/video3" and send the images via socket transport to the `/image` scope. (view rsb.conf for setup)
+`show` reads from this scope and shows the captured frames on screen. (This is the socket server and has to be run first (view rsb.conf for setup))
 
 Compilation hints
 -----------------------------------
