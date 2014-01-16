@@ -6,6 +6,11 @@ message (STATUS "Set PROJECT_NAME to ${PROJECT_NAME}")
 
 project ("${PROJECT_NAME}")
 
+# Release or Debug
+set(CMAKE_BUILD_TYPE "Debug")
+# set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+# set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+
 # Set the include pathe
 include_directories(
     /usr/local/include                                       # For OpenCV
